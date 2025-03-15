@@ -155,25 +155,45 @@
 
         function submitSurvey() {
             if (validateStage(3)) {
-                // Collect data
+                // Collect data from the survey
                 const name = document.getElementById('name').value;
                 const email = document.getElementById('email').value;
                 const occupation = document.getElementById('occupation').value;
                 const q1 = document.getElementById('q1').value;
                 const q2 = document.getElementById('q2').value;
                 const q3 = document.getElementById('q3').value;
-
-                // Display summary
-                document.getElementById('summary-name').textContent = name;
-                document.getElementById('summary-email').textContent = email;
-                document.getElementById('summary-occupation').textContent = occupation;
-                document.getElementById('summary-q1').textContent = q1;
-                document.getElementById('summary-q2').textContent = q2;
-                document.getElementById('summary-q3').textContent = q3;
-
-                // Hide survey and show summary
-                document.getElementById('stage3').classList.add('hidden');
-                document.getElementById('summary').classList.remove('hidden');
+        
+                // Construct the Google Form submission URL
+                const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfS1SDVVY5lQeU3poAy8SRMUhfayhDKCYwz2RMl9ufNmkzSUQ/formResponse";
+                const formData = new FormData();
+                formData.append("entry.123456789", name); // Replace 123456789 with the actual field ID for "Name"
+                formData.append("entry.987654321", email); // Replace 987654321 with the actual field ID for "Email"
+                formData.append("entry.112233445", occupation); // Replace 112233445 with the actual field ID for "Occupation"
+                formData.append("entry.556677889", q1); // Replace 556677889 with the actual field ID for "Satisfaction"
+                formData.append("entry.334455667", q2); // Replace 334455667 with the actual field ID for "Recommendation"
+                formData.append("entry.778899001", q3); // Replace 778899001 with the actual field ID for "Suggestions"
+        
+                // Send the data to the Google Form
+                fetch(formUrl, {
+                    method: "POST",
+                    body: formData,
+                    mode: "no-cors" // Required for cross-origin requests
+                }).then(() => {
+                    // Hide survey and show summary
+                    document.getElementById('stage3').classList.add('hidden');
+                    document.getElementById('summary').classList.remove('hidden');
+        
+                    // Display summary
+                    document.getElementById('summary-name').textContent = name;
+                    document.getElementById('summary-email').textContent = email;
+                    document.getElementById('summary-occupation').textContent = occupation;
+                    document.getElementById('summary-q1').textContent = q1;
+                    document.getElementById('summary-q2').textContent = q2;
+                    document.getElementById('summary-q3').textContent = q3;
+                }).catch((error) => {
+                    console.error("Error submitting form:", error);
+                    alert("There was an error submitting your response. Please try again.");
+                });
             } else {
                 alert("Please fill out all fields before submitting.");
             }
