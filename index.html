@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Stage Survey</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        .survey-container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+        }
+        .survey-container h2 {
+            text-align: center;
+        }
+        .survey-container input,
+        .survey-container select,
+        .survey-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .survey-container button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .survey-container button:hover {
+            background-color: #0056b3;
+        }
+        .hidden {
+            display: none;
+        }
+        .summary {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="survey-container">
+        <h2>Multi-Stage Survey</h2>
+
+        <!-- Stage 1: Personal Information -->
+        <div id="stage1" class="stage">
+            <h3>Step 1: Personal Information</h3>
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="Enter your name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+
+            <button onclick="nextStage(1)">Next</button>
+        </div>
+
+        <!-- Stage 2: Occupation -->
+        <div id="stage2" class="stage hidden">
+            <h3>Step 2: Occupation</h3>
+            <label for="occupation">Occupation:</label>
+            <select id="occupation" required>
+                <option value="">Select your occupation</option>
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+                <option value="engineer">Engineer</option>
+                <option value="other">Other</option>
+            </select>
+
+            <button onclick="prevStage(1)">Back</button>
+            <button onclick="nextStage(2)">Next</button>
+        </div>
+
+        <!-- Stage 3: Survey Questions -->
+        <div id="stage3" class="stage hidden">
+            <h3>Step 3: Survey Questions</h3>
+            <p>Question 1: How satisfied are you with our service?</p>
+            <select id="q1" required>
+                <option value="">Select an option</option>
+                <option value="very-satisfied">Very Satisfied</option>
+                <option value="satisfied">Satisfied</option>
+                <option value="neutral">Neutral</option>
+                <option value="dissatisfied">Dissatisfied</option>
+                <option value="very-dissatisfied">Very Dissatisfied</option>
+            </select>
+
+            <p>Question 2: Would you recommend us to others?</p>
+            <select id="q2" required>
+                <option value="">Select an option</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+
+            <p>Question 3: What improvements would you suggest?</p>
+            <textarea id="q3" rows="4" placeholder="Your suggestions here"></textarea>
+
+            <button onclick="prevStage(2)">Back</button>
+            <button onclick="submitSurvey()">Submit</button>
+        </div>
+
+        <!-- Summary -->
+        <div id="summary" class="summary hidden">
+            <h3>Thank You!</h3>
+            <p><strong>Name:</strong> <span id="summary-name"></span></p>
+            <p><strong>Email:</strong> <span id="summary-email"></span></p>
+            <p><strong>Occupation:</strong> <span id="summary-occupation"></span></p>
+            <p><strong>Satisfaction:</strong> <span id="summary-q1"></span></p>
+            <p><strong>Recommendation:</strong> <span id="summary-q2"></span></p>
+            <p><strong>Suggestions:</strong> <span id="summary-q3"></span></p>
+        </div>
+    </div>
+
+    <script>
+        let currentStage = 1;
+
+        function nextStage(stage) {
+            if (validateStage(stage)) {
+                document.getElementById(`stage${stage}`).classList.add('hidden');
+                document.getElementById(`stage${stage + 1}`).classList.remove('hidden');
+                currentStage++;
+            } else {
+                alert("Please fill out all fields before proceeding.");
+            }
+        }
+
+        function prevStage(stage) {
+            document.getElementById(`stage${stage}`).classList.add('hidden');
+            document.getElementById(`stage${stage - 1}`).classList.remove('hidden');
+            currentStage--;
+        }
+
+        function validateStage(stage) {
+            const inputs = document.querySelectorAll(`#stage${stage} input, #stage${stage} select, #stage${stage} textarea`);
+            for (let input of inputs) {
+                if (!input.value) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function submitSurvey() {
+            if (validateStage(3)) {
+                // Collect data
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const occupation = document.getElementById('occupation').value;
+                const q1 = document.getElementById('q1').value;
+                const q2 = document.getElementById('q2').value;
+                const q3 = document.getElementById('q3').value;
+
+                // Display summary
+                document.getElementById('summary-name').textContent = name;
+                document.getElementById('summary-email').textContent = email;
+                document.getElementById('summary-occupation').textContent = occupation;
+                document.getElementById('summary-q1').textContent = q1;
+                document.getElementById('summary-q2').textContent = q2;
+                document.getElementById('summary-q3').textContent = q3;
+
+                // Hide survey and show summary
+                document.getElementById('stage3').classList.add('hidden');
+                document.getElementById('summary').classList.remove('hidden');
+            } else {
+                alert("Please fill out all fields before submitting.");
+            }
+        }
+    </script>
+</body>
+</html>
