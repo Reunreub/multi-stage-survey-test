@@ -166,12 +166,12 @@
                 // Construct the Google Form submission URL
                 const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfS1SDVVY5lQeU3poAy8SRMUhfayhDKCYwz2RMl9ufNmkzSUQ/formResponse";
                 const formData = new FormData();
-                formData.append("entry.123456789", name); // Replace 123456789 with the actual field ID for "Name"
-                formData.append("entry.987654321", email); // Replace 987654321 with the actual field ID for "Email"
-                formData.append("entry.112233445", occupation); // Replace 112233445 with the actual field ID for "Occupation"
-                formData.append("entry.556677889", q1); // Replace 556677889 with the actual field ID for "Satisfaction"
-                formData.append("entry.334455667", q2); // Replace 334455667 with the actual field ID for "Recommendation"
-                formData.append("entry.778899001", q3); // Replace 778899001 with the actual field ID for "Suggestions"
+                formData.append("entry.1194506699", name); // Field ID for "Name"
+                formData.append("entry.1766143169", email); // Field ID for "Email"
+                formData.append("entry.377098915", occupation); // Field ID for "Occupation"
+                formData.append("entry.609030784", q1); // Field ID for "Satisfaction"
+                formData.append("entry.1123688751", q2); // Field ID for "Recommendation"
+                formData.append("entry.2075504463", q3); // Field ID for "Suggestions"
         
                 // Send the data to the Google Form
                 fetch(formUrl, {
