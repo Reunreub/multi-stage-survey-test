@@ -162,7 +162,7 @@
                 const q1 = document.getElementById('q1').value;
                 const q2 = document.getElementById('q2').value;
                 const q3 = document.getElementById('q3').value;
-
+        
                 // Create an object to hold the form data
                 const formData = new URLSearchParams({
                     name: name,
@@ -172,20 +172,20 @@
                     q2: q2,
                     q3: q3
                 });
-
+        
                 // Send the data to the Google Apps Script Web App
                 fetch("https://script.google.com/macros/s/AKfycbyBgf9vg4fEkDhPe2EAOXdBL3Lfis5Ce2Y0fbmprk7W56KpH_Z2pNm3REDCxNnAUfxFmQ/exec", {
                     method: "POST",
-                    body: formData
+                    body: formData.toString()
                 })
                 .then(response => response.text())
                 .then(data => {
                     alert("Thank you for your submission!");
-
+        
                     // Hide the survey and show the summary
                     document.getElementById('stage3').classList.add('hidden');
                     document.getElementById('summary').classList.remove('hidden');
-
+        
                     // Display the submitted data in the summary section
                     document.getElementById('summary-name').textContent = name;
                     document.getElementById('summary-email').textContent = email;
