@@ -163,6 +163,16 @@
                 const q2 = document.getElementById('q2').value;
                 const q3 = document.getElementById('q3').value;
         
+                // Log the collected data for debugging
+                console.log({
+                    name: name,
+                    email: email,
+                    occupation: occupation,
+                    q1: q1,
+                    q2: q2,
+                    q3: q3
+                });
+        
                 // Create an object to hold the form data
                 const formData = new URLSearchParams({
                     name: name,
@@ -202,6 +212,7 @@
                 alert("Please fill out all fields before submitting.");
             }
         }
+        
     </script>
 </body>
 </html>
